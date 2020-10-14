@@ -16,16 +16,16 @@
       <ul class="todo-list">
         <li
           class="todo"
-          v-for="todo in filteredTodos"
-          v-bind:key="todo.name"
-          v-bind:class="{ completed: todo.completed, editing: todo ===  editing}"
+          v-for="(todo,index) in filteredTodos"
+          v-bind:key="index"
+          v-bind:class="{ completed: todo.completed, editing: index ===  editing}"
         >
           <div class="view">
             <input type="checkbox" v-model="todo.completed" class="toggle">
-            <label v-on:dblclick="editTodo(todo)"> {{ todo.name }} </label>
+            <label v-on:dblclick="editTodo(index)"> {{ todo.name }} </label>
             <button class="destroy" v-on:click.prevent="deleteTodo(todo)"></button>
           </div>
-          <input type="text" class="edit" v-model="todo.name" @keyup.enter="doneEdit">
+          <input type="text" class="edit" v-model="todo.name" @keyup.enter="doneEdit" @blur.prevent="doneEdit" v-focus="editing === index">
         </li>
       </ul>
     </div>
@@ -96,8 +96,8 @@ export default {
     deleteCompleted() {
         this.todos = this.todos.filter(todo => !todo.completed)
     },
-    editTodo(todo) {
-        this.editing = todo
+    editTodo(index) {
+        this.editing = index
     },
     doneEdit() {
         this.editing = null
@@ -132,5 +132,12 @@ export default {
       return this.todos;
     },
   },
+  directives: {
+      focus(el, value) {
+        if(value) {
+            el.focus()
+        }
+      }
+  }
 };
 </script>

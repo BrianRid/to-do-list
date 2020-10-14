@@ -1,15 +1,20 @@
 <template>
   <div id="app">
+    
     <todoElement></todoElement>
+
   </div>
 </template>
 
 <script>
-import todoElement from "./components/todoElement"
+import todoElement from "./components/todoElement";
+
 export default {
   name: 'App',
   components: {
-    todoElement
+
+    todoElement,
+
   }
 }
 </script>
